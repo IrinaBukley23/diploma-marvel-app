@@ -41,8 +41,7 @@ class RandomChar extends Component {
 
     updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        this.marvelService
-            .getCharacter(id)
+        this.marvelService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError);
     }
@@ -54,13 +53,22 @@ class RandomChar extends Component {
         const spinner = loading ? <Spinner/> : null;
         const errorMessage = error ? <ErrorMessage/> : null;
 
+        let imgStyle = {'objectFit' : 'cover'};
+        if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+            imgStyle = {'objectFit' : 'contain'};
+        }
+
         return (
             <div className="randomchar">
                 {spinner}
                 {errorMessage}
                 { !(loading | error) ? (
                     <div className="randomchar__block">
-                        <img src={thumbnail} alt="Random character" className="randomchar__img"/>
+                        <img 
+                            src={thumbnail} 
+                            alt="Random character" 
+                            style={imgStyle}
+                            className="randomchar__img"/>
                         <div className="randomchar__info">
                             <p className="randomchar__name"> {name} </p>
                             <p className="randomchar__descr">
