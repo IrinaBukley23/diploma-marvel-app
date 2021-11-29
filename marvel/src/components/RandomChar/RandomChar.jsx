@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import Spinner from '../Spinner';
+import ErrorMessage from '../ErrorMessage';
 import MarvelService from '../../services/MarvelService';
 
 import './RandomChar.scss';
@@ -15,6 +16,7 @@ class RandomChar extends Component {
     state = {
         char: {},
         loading: true,
+        error: false
     }
 
     marvelService = new MarvelService();
@@ -23,8 +25,14 @@ class RandomChar extends Component {
         this.setState( {
             char,
             loading: false,
-        
             } );
+    }
+
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
     }
 
     updateChar = () => {
@@ -32,18 +40,21 @@ class RandomChar extends Component {
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)
+            .catch(this.onError);
     }
 
     render () {
 
-        const {char: {name, description, thumbnail, homepage, wiki}, loading} = this.state;
+        const {char: {name, description, thumbnail, homepage, wiki}, loading, error} = this.state;
 
         const spinner = loading ? <Spinner/> : null;
+        const errorMessage = error ? <ErrorMessage/> : null;
 
         return (
             <div className="randomchar">
                 {spinner}
-                { !(loading) ? (
+                {errorMessage}
+                { !(loading | error) ? (
                     <div className="randomchar__block">
                         <img src={thumbnail} alt="Random character" className="randomchar__img"/>
                         <div className="randomchar__info">
