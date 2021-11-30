@@ -13,8 +13,9 @@ const ComicsList = (props) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [newComicsList, setNewComicsList] = useState(false);
-    const [comicsEnded, setComicsEnded] = useState(false);
     const [offset, setOffset] = useState(0);
+    const [comicsEnded, setComicsEnded] = useState(false);
+
     const {getAllComics} = MarvelService();
 
     useEffect( () => {
@@ -88,10 +89,12 @@ const ComicsList = (props) => {
         )
     }   
 
+    const items = renderComics(comicsList);
+
     const errorMessage = error ? <ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
-
-    const content = renderComics(comicsList);
+    const content = !(loading || error) ? items : null;
+    
 
     return (
         <div className="comics__list">

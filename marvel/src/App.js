@@ -21,12 +21,12 @@ const App = () => {
     <div className="App">
       <Header/>
       <main>
-        {/* <RandomChar/>
+        <RandomChar/>
         <div className="char__content">
           <CharList onCharSelected={onCharSelected}/>
           <CharInfo charId={selectedChar}/>
         </div>
-        <img className="bg-decoration" src={decoration} alt="vision"/> */}
+        <img className="bg-decoration" src={decoration} alt="vision"/>
         <Banner/>
         <ComicsList/>
       </main>
