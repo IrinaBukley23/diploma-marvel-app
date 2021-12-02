@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import Spinner from '../Spinner';
 import ErrorMessage from '../ErrorMessage';
 import MarvelService from '../../services/MarvelService';
@@ -30,10 +30,13 @@ const RandomChar = () => {
 
     const updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+        clearError();
         getCharacter(id)
             .then(onCharLoaded)
             .catch(onError);
     }
+
+    const clearError = useCallback( () => setError(null), [] );
 
     const {name, description, thumbnail, homepage, wiki} = char;
 
