@@ -10,7 +10,6 @@ import Page404 from './components/Pages/Page404';
 import './styles/variables.scss';
 
 const App = () => {
-  console.log(SingleCharPage);
   return (
     <Router>
       <div className="App">
